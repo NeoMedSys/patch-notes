@@ -21,7 +21,7 @@ export const patchNotes: PatchVersion[] = [
     version: "v1.0.0b - B1",
     date: "2025-04-29",
     title: "First official release notes of NeoMedSys",
-    summary: "Initial beta release focusing on core backend functionality and improving validation processes. This update introduces user management features and fixes critical validation issues.",
+    summary: "Initial beta release focusing on core backend functionality and improving validation processes. We also included a remove user from project button. So if you want to remove a user from a project, you can do it now.",
     items: [
       { type: "added", service: "backend", content: "Remove user from project endpoint" },
       { type: "added", service: "frontend", content: "Remove user from project button" },
