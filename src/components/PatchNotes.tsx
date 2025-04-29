@@ -22,13 +22,13 @@ export const patchNotes: PatchVersion[] = [
     version: "v1.0.0b - B1",
     date: "2025-04-29",
     title: "First official release notes of NeoMedSys",
-    summary: "Initial beta release focusing on core backend functionality and improving validation processes. This update introduces user management features and fixes critical validation issues.",
+    summary: "Initial beta release focusing on core backend functionality and improving validation processes. This release includes the addition of a new button for removing users from projects.",
     additionalNotes: "Half of the development team is currently on vacation. While we will maintain basic support through Slack, please expect slower rollouts and response times. Regular development pace will resume by mid-May.",
     items: [
       { type: "added", service: "backend", content: "Remove user from project endpoint" },
       { type: "added", service: "frontend", content: "Remove user from project button" },
       { type: "improved", service: "backend", content: "Validation endpoint for better logging and response" },
-      { type: "fixed", service: "frontend", content: "Bug where it didn't handle the validation of images properly with respect to shape size." },
+      { type: "fixed", service: "backend", content: "Bug where it didn't handle the validation of images properly with respect to shape size." },
     ]
   },
 ];
