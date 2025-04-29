@@ -13,6 +13,7 @@ interface PatchVersion {
   date: string;
   title: string;
   summary: string;
+  additionalNotes?: string;
   items: PatchItem[];
 }
 
@@ -21,12 +22,12 @@ export const patchNotes: PatchVersion[] = [
     version: "v1.0.0b - B1",
     date: "2025-04-29",
     title: "First official release notes of NeoMedSys",
-    summary: "Initial beta release focusing on core backend functionality and improving validation processes. We also included a remove user from project button. So if you want to remove a user from a project, you can do it now.",
+    summary: "Initial beta release focusing on core backend functionality and improving validation processes. This update introduces user management features and fixes critical validation issues.",
+    additionalNotes: "Half of the development team is currently on vacation. While we will maintain basic support through Slack, please expect slower rollouts and response times. Regular development pace will resume by mid-May.",
     items: [
       { type: "added", service: "backend", content: "Remove user from project endpoint" },
-      { type: "added", service: "frontend", content: "Remove user from project button" },
       { type: "improved", service: "backend", content: "Validation endpoint for better logging and response" },
-      { type: "fixed", service: "backend", content: "Bug where it didn't handle the validation of images properly with respect to shape size." },
+      { type: "fixed", service: "frontend", content: "Bug where it didn't handle the validation of images properly with respect to shape size." },
     ]
   },
 ];
@@ -125,6 +126,14 @@ const PatchNotes = () => {
                     ))}
                   </div>
                 </div>
+                {patch.additionalNotes && (
+                  <div>
+                    <h4 className="font-cyber text-xs text-cyber-neon/70 mb-2 tracking-wider">&gt; ADDITIONAL NOTES</h4>
+                    <p className="text-white/70 font-cyber-alt border-l-2 border-cyber-neon/30 pl-4 py-2 bg-gradient-to-r from-cyber-neon/5 to-transparent">
+                      {patch.additionalNotes}
+                    </p>
+                  </div>
+                )}
               </div>
             </AccordionContent>
           </AccordionItem>
