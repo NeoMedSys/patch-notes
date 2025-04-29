@@ -1,0 +1,87 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 228 20% 13%;
+    --foreground: 210 40% 98%;
+
+    --card: 228 18% 15%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 228 18% 15%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 180 100% 50%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 300 100% 50%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 228 15% 23%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 240 19% 31%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 228 16% 24%;
+    --input: 228 16% 24%;
+    --ring: 180 100% 50%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 228 18% 15%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 180 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-cyber-dark text-foreground font-cyber;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(0, 102, 255, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(0, 255, 255, 0.05) 0%, transparent 50%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-cyber-alt tracking-wider;
+  }
+  
+  code {
+    @apply font-cyber bg-cyber-darker text-cyber-neon px-1.5 py-0.5 rounded text-sm;
+  }
+}
+
+@layer components {
+  .cyber-border {
+    @apply border border-cyber-neon/30 shadow-[0_0_10px_rgba(0,255,255,0.2)] animate-pulse-border;
+  }
+  
+  .cyber-panel {
+    @apply bg-cyber-darker/80 cyber-border backdrop-blur-sm;
+  }
+
+  .cyber-text-glow {
+    @apply text-cyber-neon animate-glow;
+  }
+}
