@@ -1,10 +1,10 @@
-
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 interface PatchItem {
   type: 'added' | 'fixed' | 'improved' | 'removed';
+  service: 'backend' | 'frontend' | 'devops' | 'database';
   content: string;
 }
 
@@ -21,18 +21,18 @@ export const patchNotes: PatchVersion[] = [
     date: "2025-04-29",
     title: "First official release notes of NeoMedSys",
     items: [
-      { type: "added", content: "Remove user from project endpoint" },
-      { type: "improved", content: "Validation endpoint for better logging and response" },
-      { type: "fixed", content: "Bug where it didn't handle the validation of images properly with respect to shape size." },
+      { type: "added", service: "backend", content: "Remove user from project endpoint" },
+      { type: "improved", service: "backend", content: "Validation endpoint for better logging and response" },
+      { type: "fixed", service: "frontend", content: "Bug where it didn't handle the validation of images properly with respect to shape size." },
     ]
   },
 ];
 
 const typeColors = {
-  added: "bg-green-500/20 text-green-500 border-green-500/50",
-  fixed: "bg-blue-500/20 text-blue-500 border-blue-500/50",
-  improved: "bg-cyber-neon/20 text-cyber-neon border-cyber-neon/50",
-  removed: "bg-red-500/20 text-red-500 border-red-500/50",
+  added: "bg-gradient-to-br from-green-900/40 to-green-500/20 text-green-300 border-2 border-green-400/50 shadow-[0_0_15px_rgba(34,197,94,0.3)] font-cyber tracking-wider uppercase",
+  fixed: "bg-gradient-to-br from-blue-900/40 to-blue-500/20 text-blue-300 border-2 border-blue-400/50 shadow-[0_0_15px_rgba(59,130,246,0.3)] font-cyber tracking-wider uppercase",
+  improved: "bg-gradient-to-br from-[#003333]/40 to-cyber-neon/20 text-cyber-neon border-2 border-cyber-neon/50 shadow-[0_0_15px_rgba(0,255,255,0.3)] font-cyber tracking-wider uppercase",
+  removed: "bg-gradient-to-br from-red-900/40 to-red-500/20 text-red-300 border-2 border-red-400/50 shadow-[0_0_15px_rgba(239,68,68,0.3)] font-cyber tracking-wider uppercase",
 };
 
 const typeLabels = {
@@ -40,6 +40,20 @@ const typeLabels = {
   fixed: "FIXED",
   improved: "IMPROVED",
   removed: "REMOVED",
+};
+
+const serviceColors = {
+  backend: "bg-gradient-to-tl from-purple-900/30 via-purple-800/20 to-purple-700/10 text-purple-300 border border-purple-400/30 font-cyber-alt tracking-wide",
+  frontend: "bg-gradient-to-tl from-amber-900/30 via-amber-800/20 to-amber-700/10 text-amber-300 border border-amber-400/30 font-cyber-alt tracking-wide",
+  devops: "bg-gradient-to-tl from-orange-900/30 via-orange-800/20 to-orange-700/10 text-orange-300 border border-orange-400/30 font-cyber-alt tracking-wide",
+  database: "bg-gradient-to-tl from-cyan-900/30 via-cyan-800/20 to-cyan-700/10 text-cyan-300 border border-cyan-400/30 font-cyber-alt tracking-wide",
+};
+
+const serviceLabels = {
+  backend: "BACKEND",
+  frontend: "FRONTEND",
+  devops: "DEVOPS",
+  database: "DATABASE",
 };
 
 const PatchNotes = () => {
@@ -83,10 +97,16 @@ const PatchNotes = () => {
                 {patch.items.map((item, itemIndex) => (
                   <div key={itemIndex} className="flex items-start gap-3">
                     <div className={cn(
-                      "px-2 py-1 rounded border text-xs font-bold min-w-[100px] text-center",
+                      "px-3 py-1.5 rounded-md text-xs font-bold min-w-[100px] text-center",
                       typeColors[item.type]
                     )}>
                       {typeLabels[item.type]}
+                    </div>
+                    <div className={cn(
+                      "px-3 py-1 rounded-sm text-xs font-medium min-w-[100px] text-center",
+                      serviceColors[item.service]
+                    )}>
+                      {serviceLabels[item.service]}
                     </div>
                     <p className="text-white/80 pt-0.5">{item.content}</p>
                   </div>
