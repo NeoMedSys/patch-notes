@@ -26,6 +26,7 @@ export const patchNotes: PatchVersion[] = [
     additionalNotes: "Half of the development team is currently on vacation. While we will maintain basic support through Slack, please expect slower rollouts and response times. Regular development pace will resume by mid-May.",
     items: [
       { type: "added", service: "backend", content: "Remove user from project endpoint" },
+      { type: "added", service: "frontend", content: "Remove user from project button" },
       { type: "improved", service: "backend", content: "Validation endpoint for better logging and response" },
       { type: "fixed", service: "frontend", content: "Bug where it didn't handle the validation of images properly with respect to shape size." },
     ]
