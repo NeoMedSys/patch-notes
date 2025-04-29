@@ -24,6 +24,7 @@ export const patchNotes: PatchVersion[] = [
     summary: "Initial beta release focusing on core backend functionality and improving validation processes. This update introduces user management features and fixes critical validation issues.",
     items: [
       { type: "added", service: "backend", content: "Remove user from project endpoint" },
+      { type: "added", service: "frontend", content: "Remove user from project button" },
       { type: "improved", service: "backend", content: "Validation endpoint for better logging and response" },
       { type: "fixed", service: "backend", content: "Bug where it didn't handle the validation of images properly with respect to shape size." },
     ]
