@@ -28,7 +28,7 @@ export const patchNotes: PatchVersion[] = [
       { type: "added", service: "backend", content: "Remove user from project endpoint" },
       { type: "added", service: "frontend", content: "Remove user from project button" },
       { type: "improved", service: "backend", content: "Validation endpoint for better logging and response" },
-      { type: "added", service: "frontend", content: "You will now open series as a new tab using the open button" },
+      { type: "improved", service: "frontend", content: "You will now open series as a new tab using the open button" },
       { type: "fixed", service: "backend", content: "Bug where it didn't handle the validation of images properly with respect to shape size." },
     ]
   },
