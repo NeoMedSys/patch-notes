@@ -23,7 +23,7 @@ export const patchNotes: PatchVersion[] = [
     date: "2025-04-30",
     title: "First official release notes of NeoMedSys",
     summary: "Initial beta release focusing on core backend functionality and improving validation processes. This release includes the addition of a new button for removing users from projects.",
-    additionalNotes: "Half of the development team is currently on vacation. While we will maintain basic support through Slack, please expect slower rollouts and response times. Regular development pace will resume by mid-May.",
+    additionalNotes: "Half of the development team is currently on vacation. While we will maintain basic support through Slack, please expect slower rollouts and response times. Regular development pace will resume by mid-May. We have also done a lot of data migration, if there are any other projects that needs to be migrated please give us a message on slack",
     items: [
       { type: "added", service: "backend", content: "Remove user from project endpoint" },
       { type: "added", service: "frontend", content: "Remove user from project button" },
