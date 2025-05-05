@@ -28,7 +28,7 @@ export const patchNotes: PatchVersion[] = [
     items: [
       { type: "added", service: "frontend", content: "Sorting for patient names and protocol columns" },
       { type: "fixed", service: "backend", content: "Fatty model having wrong order on labels in the database" },
-      
+      { type: "fixed", service: "backend", content: "Template had an issue on the pacs computer with env variables making it not work properly."},
     ]
   },
   {
