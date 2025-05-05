@@ -24,6 +24,7 @@ export const patchNotes: PatchVersion[] = [
     date: "2025-05-05",
     title: "Small fixes",
     summary: "In this patch we focused on quality of life improvements and small fixes. In the new version we have stricted handling of things like bodyparts and such, but the migrated data did not go through this process (because it's not really the official way of adding data).",
+    additionalNotes: "There are some issues where some migrated images won't open in the viewer, we are looking into this..",
     isUpcoming: true,
     items: [
       { type: "added", service: "frontend", content: "Sorting for patient names and protocol columns" },
