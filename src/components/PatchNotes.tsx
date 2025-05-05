@@ -27,6 +27,8 @@ export const patchNotes: PatchVersion[] = [
     isUpcoming: true,
     items: [
       { type: "added", service: "frontend", content: "Sorting for patient names and protocol columns" },
+      { type: "fixed", service: "backend", content: "Fatty model having wrong order on labels in the database" },
+      
     ]
   },
   {
