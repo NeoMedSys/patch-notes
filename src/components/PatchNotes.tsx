@@ -15,12 +15,22 @@ interface Author {
   avatarUrl?: string;
 }
 
+interface SummaryItem {
+  content: string;
+  type?: 'highlight' | 'warning' | 'info';
+}
+
+interface NoteSection {
+  title: string;
+  items: string[];
+}
+
 interface PatchVersion {
   version: string;
   date: string;
   title: string;
-  summary: string;
-  additionalNotes?: string;
+  summary: SummaryItem[];
+  additionalNotes?: NoteSection[];
   isUpcoming?: boolean;
   authors: Author[];
   items: PatchItem[];
@@ -30,9 +40,20 @@ export const patchNotes: PatchVersion[] = [
   {
     version: "v1.1.0b - B1",
     date: "2025-05-05",
-    title: "Small fixes",
-    summary: "In this patch we focused on quality of life improvements and small fixes. In the new version we have stricted handling of things like bodyparts and such, but the migrated data did not go through this process (because it's not really the official way of adding data).",
-    additionalNotes: "There are some issues where some migrated images won't open in the viewer, this is because of faulty ratio handling with dimension of 1 (slices). We will now also start pushing updated every Tuesday.",
+    title: "",
+    summary: [
+      { content: "In this patch we focused on quality of life improvements and small fixes.", type: "highlight" },
+      { content: "In the new version we have strict handling of things like bodyparts and such, but the migrated data did not go through this process (because it's not really the official way of adding data). But we have manually fixes some issues with this in some projects." }
+    ],
+    additionalNotes: [
+      {
+        title: "Development Updates",
+        items: [
+          "We will now start pushing updated every Tuesday.",
+          "We are currently working to implement the project templates into the viewer, we know many are waiting for this so will try to get it done as soon as possible."
+        ]
+      }
+    ],
     isUpcoming: true,
     authors: [
       {
@@ -52,9 +73,22 @@ export const patchNotes: PatchVersion[] = [
   {
     version: "v1.0.0b - B1",
     date: "2025-04-30",
-    title: "First official release notes of NeoMedSys",
-    summary: "Initial beta release focusing on core backend functionality and improving validation processes. This release includes the addition of a new button for removing users from projects.",
-    additionalNotes: "Half of the development team is currently on vacation. While we will maintain basic support through Slack, please expect slower rollouts and response times. Regular development pace will resume by mid-May. We have also done a lot of data migration, if there are any other projects that needs to be migrated please give us a message on slack",
+    title: "",
+    summary: [
+      { content: "Initial beta release focusing on core backend functionality and improving validation processes.", type: "highlight" },
+      { content: "This release includes the addition of a new button for removing users from projects." }
+    ],
+    additionalNotes: [
+      {
+        title: "Team Updates",
+        items: [
+          "Half of the development team is currently on vacation.",
+          "While we will maintain basic support through Slack, please expect slower rollouts and response times.",
+          "Regular development pace will resume by mid-May.",
+          "We have also done a lot of data migration, if there are any other projects that needs to be migrated please give us a message on slack"
+        ]
+      }
+    ],
     authors: [
       {
         name: "Martin Soria Røvang",
@@ -167,16 +201,32 @@ const PatchNotes = () => {
                   </div>
                   <div className="max-w-full">
                     <h4 className="font-cyber text-xs text-cyber-neon/70 mb-2 tracking-wider">&gt; SUMMARY</h4>
-                    <p className="text-white/70 font-cyber-alt border-l-2 border-cyber-neon/30 pl-4 py-2 bg-gradient-to-r from-cyber-neon/5 to-transparent">
-                      {patch.summary}
-                    </p>
+                    <div className="space-y-2">
+                      {patch.summary.map((summaryItem, summaryIndex) => (
+                        <p key={summaryIndex} className={cn(
+                          "text-white/70 font-cyber-alt border-l-2 pl-4 py-2 bg-gradient-to-r from-cyber-neon/5 to-transparent",
+                          summaryItem.type === "highlight" ? "border-cyber-neon/30" : "",
+                          summaryItem.type === "warning" ? "border-orange-400/30" : "",
+                          summaryItem.type === "info" ? "border-blue-400/30" : ""
+                        )}>
+                          {summaryItem.content}
+                        </p>
+                      ))}
+                    </div>
                   </div>
                   {patch.additionalNotes && (
                     <div className="max-w-full">
                       <h4 className="font-cyber text-xs text-cyber-neon/70 mb-2 tracking-wider">&gt; ADDITIONAL NOTES</h4>
-                      <p className="text-white/70 font-cyber-alt border-l-2 border-cyber-neon/30 pl-4 py-2 bg-gradient-to-r from-cyber-neon/5 to-transparent">
-                        {patch.additionalNotes}
-                      </p>
+                      {patch.additionalNotes.map((noteSection, noteIndex) => (
+                        <div key={noteIndex} className="space-y-2">
+                          <h5 className="text-sm font-cyber-alt text-cyber-neon/70">{noteSection.title}</h5>
+                          <ul className="list-disc pl-6 space-y-1">
+                            {noteSection.items.map((noteItem, itemIndex) => (
+                              <li key={itemIndex} className="text-white/70 font-cyber-alt">{noteItem}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
                     </div>
                   )}
                 </div>
