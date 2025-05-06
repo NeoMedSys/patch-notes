@@ -12,7 +12,7 @@ export const patch: PatchVersion = {
     {
       title: "Development Updates",
       items: [
-        "We will now start pushing updated every Tuesday.",
+        "We will now start pushing updates every Tuesday.",
         "We are currently working to implement the project templates into the viewer, we know many are waiting for this so will try to get it done as soon as possible."
       ]
     }
