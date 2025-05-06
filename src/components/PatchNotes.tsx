@@ -28,9 +28,10 @@ export const patchNotes: PatchVersion[] = [
     isUpcoming: true,
     items: [
       { type: "added", service: "frontend", content: "Sorting for patient names and protocol columns" },
-      { type: "fixed", service: "backend", content: "Fatty model having wrong order on labels in the database" },
+      { type: "fixed", service: "backend", content: "Fatty model had wrong order on labels in the database" },
       { type: "fixed", service: "backend", content: "Template had an issue on the pacs computer with env variables making it not work properly."},
-      { type: "fixed", service: "frontend", content: "A problem with validation which was too strict with regards to unnecessary info"},
+      { type: "fixed", service: "backend", content: "A problem with validation which was too strict with regards to unnecessary info"},
+      { type: "improved", service: "frontend", content: "Optimized the datalist in the viewer, improved loading times and reduced memory usage." },
     ]
   },
   {
