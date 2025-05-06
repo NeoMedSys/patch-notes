@@ -18,6 +18,17 @@ export interface NoteSection {
   items: string[];
 }
 
+export interface AuthorContribution {
+  id: string;
+  remarks?: string;
+}
+
+export interface PatchAuthors {
+  patch: AuthorContribution[];
+  review?: AuthorContribution[];
+  closingRemarks?: AuthorContribution[];
+}
+
 export interface PatchVersion {
   version: string;
   date: string;
@@ -25,6 +36,6 @@ export interface PatchVersion {
   summary: SummaryItem[];
   additionalNotes?: NoteSection[];
   isUpcoming?: boolean;
-  authorIds: string[];
+  authors: PatchAuthors;
   items: PatchItem[];
 }

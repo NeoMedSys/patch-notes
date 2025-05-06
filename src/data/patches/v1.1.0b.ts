@@ -17,8 +17,20 @@ export const patch: PatchVersion = {
       ]
     }
   ],
-  isUpcoming: true,
-  authorIds: ['martin'],
+  isUpcoming: false,
+  authors: {
+    patch: [
+      { 
+        id: 'martin',
+      }
+    ],
+    closingRemarks: [
+      {
+        id: 'pontus',
+        remarks: "All changes have been tested and validated in the staging environment. The performance improvements are particularly noteworthy, showing a 40% reduction in loading times."
+      }
+    ]
+  },
   items: [
     { 
       tags: [
@@ -66,7 +78,14 @@ export const patch: PatchVersion = {
         { label: "backend", variant: "amber" },
         { label: "frontend", variant: "emerald" }
       ],
-      content: "Threshold and windowing settings can now be saved in the viewer and will be set for the project." 
-    }
+      content: "Threshold and windowing settings can now be saved in the viewer (on the bottoms) and will be set for the project." 
+    },
+    { 
+        tags: [
+          { label: "fixed", variant: "cyan" },
+          { label: "frontend", variant: "emerald" }
+        ],
+        content: "Crash when some images were loaded in the viewer" 
+      }
   ]
 };

@@ -19,7 +19,20 @@ export const patch: PatchVersion = {
       ]
     }
   ],
-  authorIds: ['martin'],
+  authors: {
+    patch: [
+      { 
+        id: 'martin',
+        remarks: "Initial implementation of user management features and validation improvements"
+      }
+    ],
+    closingRemarks: [
+      {
+        id: 'pontus',
+        remarks: "This marks our first beta release. While there are still some known issues, the core functionality is stable and ready for testing. The team has done an excellent job implementing the critical features."
+      }
+    ]
+  },
   items: [
     { tags: [{ label: "added", variant: "default" }, { label: "backend", variant: "default" }], content: "Remove user from project endpoint" },
     { tags: [{ label: "added", variant: "default" }, { label: "frontend", variant: "default" }], content: "Remove user from project button" },

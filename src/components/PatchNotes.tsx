@@ -2,9 +2,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
-import { authors } from "@/data/authors";
+import { authors, AuthorType } from "@/data/authors";
 import { patchNotes } from "@/data/patches";
-import type { Tag } from "@/types/patch-notes";
+import type { Tag, AuthorContribution } from "@/types/patch-notes";
 
 const getTagStyles = (tag: Tag) => {
   const variantMap = {
@@ -23,6 +23,60 @@ const getTagStyles = (tag: Tag) => {
   const variantStyle = tag.variant ? variantMap[tag.variant] : variantMap.default;
   
   return cn(baseStyles, variantStyle);
+};
+
+const AuthorSection = ({ type, authors: authorContributions }: { type: AuthorType; authors: AuthorContribution[] }) => {
+  const gradientMap = {
+    'patch': 'from-cyber-neon/10 to-transparent border-cyber-neon/20',
+    'review': 'from-emerald-500/10 to-transparent border-emerald-500/20',
+    'closing-remarks': 'from-purple-500/10 to-transparent border-purple-500/20'
+  };
+
+  const titleMap = {
+    'patch': 'PATCH-NOTE AUTHORS',
+    'review': 'REVIEWED BY',
+    'closing-remarks': 'CLOSING REMARKS'
+  };
+
+  return (
+    <div className={cn(
+      "p-3 bg-gradient-to-r rounded-md border",
+      gradientMap[type]
+    )}>
+      <h4 className="font-cyber text-xs text-cyber-neon/70 mb-2 tracking-wider">&gt; {titleMap[type]}</h4>
+      <div className="flex flex-col gap-4">
+        {authorContributions.map((contribution) => {
+          const author = authors[contribution.id];
+          return (
+            <div key={contribution.id} className="flex flex-col gap-3">
+              <div className="flex items-start gap-3">
+                <Avatar>
+                  <AvatarImage src={author.avatarUrl} alt={author.name} />
+                  <AvatarFallback>{author.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <span className="text-sm font-cyber text-white/90">{author.name}</span>
+                  <Badge 
+                    variant="secondary" 
+                    className="relative mt-1 w-fit font-cyber tracking-wider uppercase bg-gradient-to-r from-[#1a2e3d] to-[#0f172a] text-white/90 border border-cyber-neon/20 shadow-sm"
+                  >
+                    {author.role}
+                  </Badge>
+                </div>
+              </div>
+              {contribution.remarks && (
+                <div className="pl-12">
+                  <p className="text-sm text-white/70 font-cyber-alt border-l-2 pl-3 py-1.5 bg-gradient-to-r from-cyber-neon/5 to-transparent">
+                    {contribution.remarks}
+                  </p>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 };
 
 const PatchNotes = () => {
@@ -70,28 +124,13 @@ const PatchNotes = () => {
               <div className="pt-2 grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-6">
                 {/* Left Column - Authors, Summary and Notes */}
                 <div className="space-y-4 max-w-full">
-                  <div className="flex flex-wrap items-start gap-3 p-3 bg-gradient-to-r from-cyber-neon/10 to-transparent rounded-md border border-cyber-neon/20">
-                    {patch.authorIds.map((authorId) => {
-                      const author = authors[authorId];
-                      return (
-                        <div key={authorId} className="flex items-start gap-3">
-                          <Avatar>
-                            <AvatarImage src={author.avatarUrl} alt={author.name} />
-                            <AvatarFallback>{author.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                          </Avatar>
-                          <div className="flex flex-col">
-                            <span className="text-sm font-cyber text-white/90">{author.name}</span>
-                            <Badge 
-                              variant="secondary" 
-                              className="relative mt-1 w-fit font-cyber tracking-wider uppercase bg-gradient-to-r from-[#1a2e3d] to-[#0f172a] text-white/90 border border-cyber-neon/20 shadow-sm"
-                            >
-                              {author.role}
-                            </Badge>
-                          </div>
-                        </div>
-                      );
-                    })}
+                  {/* Authors Sections */}
+                  <div className="space-y-4">
+                    {patch.authors.patch && <AuthorSection type="patch" authors={patch.authors.patch} />}
+                    {patch.authors.review && <AuthorSection type="review" authors={patch.authors.review} />}
                   </div>
+
+                  {/* Summary Section */}
                   <div className="max-w-full">
                     <h4 className="font-cyber text-xs text-cyber-neon/70 mb-2 tracking-wider">&gt; SUMMARY</h4>
                     <div className="space-y-2">
@@ -107,6 +146,8 @@ const PatchNotes = () => {
                       ))}
                     </div>
                   </div>
+
+                  {/* Additional Notes Section */}
                   {patch.additionalNotes && (
                     <div className="max-w-full">
                       <h4 className="font-cyber text-xs text-cyber-neon/70 mb-2 tracking-wider">&gt; ADDITIONAL NOTES</h4>
@@ -121,6 +162,11 @@ const PatchNotes = () => {
                         </div>
                       ))}
                     </div>
+                  )}
+
+                  {/* Closing Remarks Section */}
+                  {patch.authors.closingRemarks && (
+                    <AuthorSection type="closing-remarks" authors={patch.authors.closingRemarks} />
                   )}
                 </div>
 
