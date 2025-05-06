@@ -22,7 +22,7 @@ interface PatchVersion {
   summary: string;
   additionalNotes?: string;
   isUpcoming?: boolean;
-  author: Author;
+  authors: Author[];
   items: PatchItem[];
 }
 
@@ -34,11 +34,13 @@ export const patchNotes: PatchVersion[] = [
     summary: "In this patch we focused on quality of life improvements and small fixes. In the new version we have stricted handling of things like bodyparts and such, but the migrated data did not go through this process (because it's not really the official way of adding data).",
     additionalNotes: "There are some issues where some migrated images won't open in the viewer, this is because of faulty ratio handling with dimension of 1 (slices). We will now also start pushing updated every Tuesday.",
     isUpcoming: true,
-    author: {
-      name: "Martin Soria Røvang",
-      role: "DEVELOPER",
-      avatarUrl: "/users/martin.png"
-    },
+    authors: [
+      {
+        name: "Martin Soria Røvang",
+        role: "DEVELOPER",
+        avatarUrl: "/users/martin.png"
+      }
+    ],
     items: [
       { type: "added", service: "frontend", content: "Sorting for patient names and protocol columns" },
       { type: "fixed", service: "backend", content: "Fatty model had wrong order on labels in the database" },
@@ -53,11 +55,13 @@ export const patchNotes: PatchVersion[] = [
     title: "First official release notes of NeoMedSys",
     summary: "Initial beta release focusing on core backend functionality and improving validation processes. This release includes the addition of a new button for removing users from projects.",
     additionalNotes: "Half of the development team is currently on vacation. While we will maintain basic support through Slack, please expect slower rollouts and response times. Regular development pace will resume by mid-May. We have also done a lot of data migration, if there are any other projects that needs to be migrated please give us a message on slack",
-    author: {
-      name: "Martin Soria Røvang",
-      role: "DEV",
-      avatarUrl: "/users/martin.png"
-    },
+    authors: [
+      {
+        name: "Martin Soria Røvang",
+        role: "DEV",
+        avatarUrl: "/users/martin.png"
+      }
+    ],
     items: [
       { type: "added", service: "backend", content: "Remove user from project endpoint" },
       { type: "added", service: "frontend", content: "Remove user from project button" },
@@ -140,22 +144,26 @@ const PatchNotes = () => {
             </AccordionTrigger>
             <AccordionContent className="px-4 pb-4">
               <div className="pt-2 grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-6">
-                {/* Left Column - Author, Summary and Notes */}
+                {/* Left Column - Authors, Summary and Notes */}
                 <div className="space-y-4 max-w-full">
-                  <div className="flex items-start gap-3 p-3 bg-gradient-to-r from-cyber-neon/10 to-transparent rounded-md border border-cyber-neon/20">
-                    <Avatar>
-                      <AvatarImage src={patch.author.avatarUrl} alt={patch.author.name} />
-                      <AvatarFallback>{patch.author.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-cyber text-white/90">{patch.author.name}</span>
-                      <Badge 
-                        variant="secondary" 
-                        className="relative mt-1 w-fit font-cyber tracking-wider uppercase bg-gradient-to-r from-[#1a2e3d] to-[#0f172a] text-white/90 border border-cyber-neon/20 shadow-sm"
-                      >
-                        {patch.author.role}
-                      </Badge>
-                    </div>
+                  <div className="flex flex-wrap items-start gap-3 p-3 bg-gradient-to-r from-cyber-neon/10 to-transparent rounded-md border border-cyber-neon/20">
+                    {patch.authors.map((author, authorIndex) => (
+                      <div key={authorIndex} className="flex items-start gap-3">
+                        <Avatar>
+                          <AvatarImage src={author.avatarUrl} alt={author.name} />
+                          <AvatarFallback>{author.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-cyber text-white/90">{author.name}</span>
+                          <Badge 
+                            variant="secondary" 
+                            className="relative mt-1 w-fit font-cyber tracking-wider uppercase bg-gradient-to-r from-[#1a2e3d] to-[#0f172a] text-white/90 border border-cyber-neon/20 shadow-sm"
+                          >
+                            {author.role}
+                          </Badge>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                   <div className="max-w-full">
                     <h4 className="font-cyber text-xs text-cyber-neon/70 mb-2 tracking-wider">&gt; SUMMARY</h4>
