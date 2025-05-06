@@ -22,12 +22,15 @@ export const patch: PatchVersion = {
     patch: [
       { 
         id: 'martin',
+      },
+      { 
+        id: 'pontus',
       }
     ],
     closingRemarks: [
       {
-        id: 'pontus',
-        remarks: "Great work, team. Your dedication and innovation continue to drive Neomedsys forward—lets keep pushing boundaries together."
+        id: 'jon',
+        remarks: "Great work, team. Your dedication and innovation continue to drive NeoMedSys forward—lets keep pushing boundaries together."
       }
     ]
   },

@@ -33,7 +33,7 @@ const AuthorSection = ({ type, authors: authorContributions }: { type: AuthorTyp
   };
 
   const titleMap = {
-    'patch': 'PATCH-NOTE AUTHORS',
+    'patch': 'PATCH AUTHORS',
     'review': 'REVIEWED BY',
     'closing-remarks': 'CLOSING REMARKS'
   };
@@ -56,18 +56,25 @@ const AuthorSection = ({ type, authors: authorContributions }: { type: AuthorTyp
                 </Avatar>
                 <div className="flex flex-col">
                   <span className="text-sm font-cyber text-white/90">{author.name}</span>
-                  <Badge 
-                    variant="secondary" 
-                    className="relative mt-1 w-fit font-cyber tracking-wider uppercase bg-gradient-to-r from-[#1a2e3d] to-[#0f172a] text-white/90 border border-cyber-neon/20 shadow-sm"
-                  >
-                    {author.role}
-                  </Badge>
+                  <div className="flex flex-wrap gap-1.5 mt-1">
+                    {author.roles.map((role, index) => (
+                      <Badge 
+                        key={index}
+                        variant="secondary" 
+                        className="relative w-fit font-cyber tracking-wider uppercase bg-gradient-to-r from-[#1a2e3d] to-[#0f172a] text-white/90 border border-cyber-neon/20 shadow-sm"
+                      >
+                        {role}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
               </div>
               {contribution.remarks && (
-                <div className="pl-12">
-                  <p className="text-sm text-white/70 font-cyber-alt border-l-2 pl-3 py-1.5 bg-gradient-to-r from-cyber-neon/5 to-transparent">
+                <div className="pl-12 relative">
+                  <div className="absolute text-cyber-neon/20 newspaper-quote text-7xl -left-2 -top-6">“</div>
+                  <p className="text-base md:text-lg text-white/70 font-cyber-alt border-l-2 pl-3 py-3 bg-gradient-to-r from-cyber-neon/5 to-transparent relative leading-relaxed">
                     {contribution.remarks}
+                    <span className="absolute text-cyber-neon/20 newspaper-quote text-7xl -right-4 -bottom-8">”</span>
                   </p>
                 </div>
               )}
