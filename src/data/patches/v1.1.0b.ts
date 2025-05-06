@@ -3,7 +3,7 @@ import { PatchVersion } from "@/types/patch-notes";
 export const patch: PatchVersion = {
   version: "v1.1.0b - B1",
   date: "2025-05-05",
-  title: "Small fixes",
+  title: "",
   summary: [
     { content: "In this patch we focused on quality of life improvements and small fixes.", type: "highlight" },
     { content: "In the new version we have stricted handling of things like bodyparts and such, but the migrated data did not go through this process (because it's not really the official way of adding data). But we have manually fixes some issues with this in some projects." }
@@ -27,7 +27,7 @@ export const patch: PatchVersion = {
     closingRemarks: [
       {
         id: 'pontus',
-        remarks: "All changes have been tested and validated in the staging environment. The performance improvements are particularly noteworthy, showing a 40% reduction in loading times."
+        remarks: "Great work, team. Your dedication and innovation continue to drive Neomedsys forward—lets keep pushing boundaries together."
       }
     ]
   },

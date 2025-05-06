@@ -3,7 +3,7 @@ import { PatchVersion } from "@/types/patch-notes";
 export const patch: PatchVersion = {
   version: "v1.0.0b - B1",
   date: "2025-04-30",
-  title: "First official release notes of NeoMedSys",
+  title: "",
   summary: [
     { content: "Initial beta release focusing on core backend functionality and improving validation processes.", type: "highlight" },
     { content: "This release includes the addition of a new button for removing users from projects." }
@@ -24,12 +24,6 @@ export const patch: PatchVersion = {
       { 
         id: 'martin',
         remarks: "Initial implementation of user management features and validation improvements"
-      }
-    ],
-    closingRemarks: [
-      {
-        id: 'pontus',
-        remarks: "This marks our first beta release. While there are still some known issues, the core functionality is stable and ready for testing. The team has done an excellent job implementing the critical features."
       }
     ]
   },
