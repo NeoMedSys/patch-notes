@@ -2,17 +2,12 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { authors, Author } from "@/data/authors";
 
 interface PatchItem {
   type: 'added' | 'fixed' | 'improved' | 'removed';
   service: 'backend' | 'frontend' | 'devops' | 'database';
   content: string;
-}
-
-interface Author {
-  name: string;
-  role: string;
-  avatarUrl?: string;
 }
 
 interface SummaryItem {
@@ -32,7 +27,7 @@ interface PatchVersion {
   summary: SummaryItem[];
   additionalNotes?: NoteSection[];
   isUpcoming?: boolean;
-  authors: Author[];
+  authorIds: string[];
   items: PatchItem[];
 }
 
@@ -40,10 +35,10 @@ export const patchNotes: PatchVersion[] = [
   {
     version: "v1.1.0b - B1",
     date: "2025-05-05",
-    title: "",
+    title: "Small fixes",
     summary: [
       { content: "In this patch we focused on quality of life improvements and small fixes.", type: "highlight" },
-      { content: "In the new version we have strict handling of things like bodyparts and such, but the migrated data did not go through this process (because it's not really the official way of adding data). But we have manually fixes some issues with this in some projects." }
+      { content: "In the new version we have stricted handling of things like bodyparts and such, but the migrated data did not go through this process (because it's not really the official way of adding data). But we have manually fixes some issues with this in some projects." }
     ],
     additionalNotes: [
       {
@@ -55,13 +50,7 @@ export const patchNotes: PatchVersion[] = [
       }
     ],
     isUpcoming: true,
-    authors: [
-      {
-        name: "Martin Soria Røvang",
-        role: "DEVELOPER",
-        avatarUrl: "/users/martin.png"
-      }
-    ],
+    authorIds: ['martin'],
     items: [
       { type: "added", service: "frontend", content: "Sorting for patient names and protocol columns" },
       { type: "fixed", service: "backend", content: "Fatty model had wrong order on labels in the database" },
@@ -73,7 +62,7 @@ export const patchNotes: PatchVersion[] = [
   {
     version: "v1.0.0b - B1",
     date: "2025-04-30",
-    title: "",
+    title: "First official release notes of NeoMedSys",
     summary: [
       { content: "Initial beta release focusing on core backend functionality and improving validation processes.", type: "highlight" },
       { content: "This release includes the addition of a new button for removing users from projects." }
@@ -89,13 +78,7 @@ export const patchNotes: PatchVersion[] = [
         ]
       }
     ],
-    authors: [
-      {
-        name: "Martin Soria Røvang",
-        role: "DEVELOPER",
-        avatarUrl: "/users/martin.png"
-      }
-    ],
+    authorIds: ['martin'],
     items: [
       { type: "added", service: "backend", content: "Remove user from project endpoint" },
       { type: "added", service: "frontend", content: "Remove user from project button" },
@@ -181,23 +164,26 @@ const PatchNotes = () => {
                 {/* Left Column - Authors, Summary and Notes */}
                 <div className="space-y-4 max-w-full">
                   <div className="flex flex-wrap items-start gap-3 p-3 bg-gradient-to-r from-cyber-neon/10 to-transparent rounded-md border border-cyber-neon/20">
-                    {patch.authors.map((author, authorIndex) => (
-                      <div key={authorIndex} className="flex items-start gap-3">
-                        <Avatar>
-                          <AvatarImage src={author.avatarUrl} alt={author.name} />
-                          <AvatarFallback>{author.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex flex-col">
-                          <span className="text-sm font-cyber text-white/90">{author.name}</span>
-                          <Badge 
-                            variant="secondary" 
-                            className="relative mt-1 w-fit font-cyber tracking-wider uppercase bg-gradient-to-r from-[#1a2e3d] to-[#0f172a] text-white/90 border border-cyber-neon/20 shadow-sm"
-                          >
-                            {author.role}
-                          </Badge>
+                    {patch.authorIds.map((authorId) => {
+                      const author = authors[authorId];
+                      return (
+                        <div key={authorId} className="flex items-start gap-3">
+                          <Avatar>
+                            <AvatarImage src={author.avatarUrl} alt={author.name} />
+                            <AvatarFallback>{author.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                          </Avatar>
+                          <div className="flex flex-col">
+                            <span className="text-sm font-cyber text-white/90">{author.name}</span>
+                            <Badge 
+                              variant="secondary" 
+                              className="relative mt-1 w-fit font-cyber tracking-wider uppercase bg-gradient-to-r from-[#1a2e3d] to-[#0f172a] text-white/90 border border-cyber-neon/20 shadow-sm"
+                            >
+                              {author.role}
+                            </Badge>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                   <div className="max-w-full">
                     <h4 className="font-cyber text-xs text-cyber-neon/70 mb-2 tracking-wider">&gt; SUMMARY</h4>
