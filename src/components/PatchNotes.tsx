@@ -1,10 +1,14 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { authors, AuthorType } from "@/data/authors";
 import { patchNotes } from "@/data/patches";
 import type { Tag, AuthorContribution } from "@/types/patch-notes";
+import html2canvas from 'html2canvas';
+import { useRef } from 'react';
+import { Download } from "lucide-react";
 
 const getTagStyles = (tag: Tag) => {
   const variantMap = {
@@ -87,6 +91,126 @@ const AuthorSection = ({ type, authors: authorContributions }: { type: AuthorTyp
 };
 
 const PatchNotes = () => {
+  const patchRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  const handleDownload = async (version: string, isCompact: boolean = false) => {
+    const element = patchRefs.current[version];
+    if (!element) return;
+
+    try {
+      // Create a temporary container that mimics the website layout
+      const container = document.createElement('div');
+      container.style.position = 'fixed';
+      container.style.left = '-9999px';
+      container.style.width = isCompact ? '600px' : '100%';
+      container.style.maxWidth = isCompact ? '600px' : '2000px';
+      container.style.padding = '1rem';
+      container.className = 'cyber-panel';
+      document.body.appendChild(container);
+
+      // Create a wrapper to maintain the website's layout
+      const wrapper = document.createElement('div');
+      wrapper.className = 'p-4 bg-black min-h-screen';
+      wrapper.style.width = '100%';
+      wrapper.style.maxWidth = isCompact ? '600px' : '1400px';
+      wrapper.style.margin = '0 auto';
+      container.appendChild(wrapper);
+
+      // Clone the element into our wrapper
+      const cloneElement = element.cloneNode(true) as HTMLDivElement;
+      
+      if (isCompact) {
+        // For compact version, modify the clone to show only essential information
+        const nonEssentialSections = cloneElement.querySelectorAll('.space-y-4');
+        nonEssentialSections.forEach(section => {
+          if (section.querySelector('[type="closing-remarks"]')) {
+            section.remove();
+          }
+        });
+
+        // Remove additional notes section in compact mode
+        const additionalNotes = cloneElement.querySelector('div[class*="ADDITIONAL NOTES"]')?.parentElement;
+        if (additionalNotes) {
+          additionalNotes.remove();
+        }
+
+        // Adjust the grid layout for compact view
+        cloneElement.className = cloneElement.className.replace('grid-cols-1 lg:grid-cols-[350px_1fr]', 'grid-cols-1');
+        
+        // Add compact mode specific styles
+        const style = document.createElement('style');
+        style.textContent = `
+          .compact-view {
+            font-size: 0.9em;
+          }
+          .compact-view .space-y-4 { margin-bottom: 1rem; }
+          .compact-view p { margin: 0.5rem 0; }
+        `;
+        wrapper.appendChild(style);
+        cloneElement.classList.add('compact-view');
+      }
+
+      // Find and clone the title section
+      const accordionItem = element.closest('.cyber-panel');
+      if (accordionItem) {
+        const titleSection = accordionItem.querySelector('.flex.flex-col.md\\:flex-row.md\\:items-center.justify-between')?.cloneNode(true) as HTMLDivElement;
+        if (titleSection) {
+          // Remove the download buttons if they exist
+          const downloadButtons = titleSection.querySelectorAll('button');
+          downloadButtons.forEach(button => button.remove());
+
+          // Ensure the title section maintains its layout
+          const titleContainer = document.createElement('div');
+          titleContainer.className = 'mb-6 px-4 w-full border-b border-cyber-neon/20 pb-4';
+          titleContainer.appendChild(titleSection);
+
+          // Add the title section to the wrapper
+          wrapper.appendChild(titleContainer);
+        }
+      }
+
+      // Add the main content
+      wrapper.appendChild(cloneElement);
+
+      // Take the screenshot with proper dimensions and higher quality settings
+      const canvas = await html2canvas(wrapper, {
+        backgroundColor: '#000',
+        scale: isCompact ? 2 : 3, // Increased scale for better quality
+        logging: false,
+        width: wrapper.offsetWidth,
+        height: wrapper.offsetHeight,
+        onclone: (clonedDoc) => {
+          // Ensure all Tailwind classes are applied in the cloned document
+          const styleSheets = Array.from(document.styleSheets);
+          styleSheets.forEach(styleSheet => {
+            try {
+              if (styleSheet.cssRules) {
+                const newStyleSheet = clonedDoc.createElement('style');
+                Array.from(styleSheet.cssRules).forEach(rule => {
+                  newStyleSheet.appendChild(clonedDoc.createTextNode(rule.cssText));
+                });
+                clonedDoc.head.appendChild(newStyleSheet);
+              }
+            } catch (e) {
+              console.warn('Could not copy styles', e);
+            }
+          });
+        }
+      });
+
+      // Clean up
+      document.body.removeChild(container);
+
+      // Create and trigger download with PNG format
+      const link = document.createElement('a');
+      link.download = `neomedsis-${version}-patch-notes${isCompact ? '-thumb' : ''}.png`;
+      link.href = canvas.toDataURL('image/png'); // Using PNG format for better quality
+      link.click();
+    } catch (error) {
+      console.error('Failed to generate image:', error);
+    }
+  };
+
   return (
     <div className="w-full max-w-[2000px] mx-2 md:mx-4 overflow-x-hidden">
       <Accordion type="single" collapsible className="space-y-6">
@@ -102,7 +226,7 @@ const PatchNotes = () => {
           >
             <AccordionTrigger className="px-4 py-4 hover:no-underline group">
               <div className="flex flex-col md:flex-row md:items-center justify-between w-full text-left gap-2">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 flex-wrap">
                   <span className={cn(
                     "font-cyber text-xl md:text-2xl",
                     index === 0 ? "cyber-text-glow" : "text-white",
@@ -116,6 +240,32 @@ const PatchNotes = () => {
                   {patch.isUpcoming && (
                     <Badge className="bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold">UPCOMING</Badge>
                   )}
+                  <div className="flex gap-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-cyber-neon hover:text-cyber-neon/80 hover:bg-cyber-neon/10"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleDownload(patch.version, false);
+                      }}
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      Full Image
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-cyber-neon hover:text-cyber-neon/80 hover:bg-cyber-neon/10"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleDownload(patch.version, true);
+                      }}
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      Thumbnail
+                    </Button>
+                  </div>
                 </div>
                 <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
                   <h3 className="text-lg font-cyber-alt font-medium text-white/90">
@@ -128,7 +278,10 @@ const PatchNotes = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-4 pb-4">
-              <div className="pt-2 grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-6">
+              <div 
+                ref={(el) => patchRefs.current[patch.version] = el}
+                className="pt-2 grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-6"
+              >
                 {/* Left Column - Authors, Summary and Notes */}
                 <div className="space-y-4 max-w-full">
                   {/* Authors Sections */}

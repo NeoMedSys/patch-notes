@@ -23,7 +23,6 @@ export const patch: PatchVersion = {
     patch: [
       { 
         id: 'martin',
-        remarks: "Initial implementation of user management features and validation improvements"
       }
     ]
   },
