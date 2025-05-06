@@ -92,7 +92,7 @@ export const patchNotes: PatchVersion[] = [
     authors: [
       {
         name: "Martin Soria Røvang",
-        role: "DEV",
+        role: "DEVELOPER",
         avatarUrl: "/users/martin.png"
       }
     ],
