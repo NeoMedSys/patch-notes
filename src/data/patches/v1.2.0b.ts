@@ -56,7 +56,7 @@ export const patch: PatchVersion = {
         { label: "updated", variant: "orange" },
         { label: "viewer", variant: "slate" },
       ],
-      content: "Added slice indicators for labels. You can now see where which slice has been labeled and you can also click them to jump to the slice."
+      content: "Added slice indicators for labels. You can now see which slices have been labeled and you can also click them to jump to the slice."
     },
     { 
       tags: [
