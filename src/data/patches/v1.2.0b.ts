@@ -7,15 +7,14 @@ export const patch: PatchVersion = {
   summary: [
     { content: "In this patch we include some quality of life updates in addition to some fixes.", type: "highlight" },
   ],
-  // additionalNotes: [
-  //   {
-  //     title: "Development Updates",
-  //     items: [
-  //       "We will now start pushing updates every Tuesday.",
-  //       "We are currently working to implement the project templates into the viewer, we know many are waiting for this so will try to get it done as soon as possible."
-  //     ]
-  //   }
-  // ],
+  additionalNotes: [
+    {
+      title: "Development Updates",
+      items: [
+        "We continue to do some additional migrations and small uploads of data.",
+      ]
+    }
+  ],
   isUpcoming: false,
   authors: {
     patch: [
@@ -24,6 +23,9 @@ export const patch: PatchVersion = {
       },
       { 
         id: 'pontus',
+      },
+      { 
+        id: 'elakkyen',
       }
     ],
     closingRemarks: [
@@ -36,11 +38,32 @@ export const patch: PatchVersion = {
   items: [
     { 
       tags: [
-        { label: "added", variant: "emerald" },
-        { label: "frontend", variant: "amber" },
-        { label: "ui", variant: "cyan" }
+        { label: "fixed", variant: "sky" },
+        { label: "backend", variant: "amber" },
       ],
-      content: "" 
+      content: "Fixed an issue with the process order for models"
+    },
+    { 
+      tags: [
+        { label: "added", variant: "emerald" },
+        { label: "model", variant: "cyan" },
+      ],
+      content: "Added Viola 3.1.0 model"
+    },
+    
+    { 
+      tags: [
+        { label: "updated", variant: "orange" },
+        { label: "viewer", variant: "slate" },
+      ],
+      content: "Added slice indicators for labels. You can now see where which slice has been labeled and you can also click them to jump to the slice."
+    },
+    { 
+      tags: [
+        { label: "improved", variant: "orange" },
+        { label: "no-dicom-etl", variant: "sky" },
+      ],
+      content: "Fixed importing data to NeoMedSys, adaptation to new database tables"
     },
   ]
 };
