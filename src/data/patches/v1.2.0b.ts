@@ -41,7 +41,7 @@ export const patch: PatchVersion = {
         { label: "fixed", variant: "sky" },
         { label: "backend", variant: "amber" },
       ],
-      content: "Fixed an issue with the process order for models"
+      content: "Fixed an issue with the process order for models in neoml/gingerbread format"
     },
     { 
       tags: [
