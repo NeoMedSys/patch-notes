@@ -3,10 +3,20 @@ export interface Tag {
   variant?: 'default' | 'emerald' | 'sky' | 'cyan' | 'red' | 'purple' | 'amber' | 'orange' | 'slate';
 }
 
+export interface PatchImage {
+  src: string;
+  alt: string;
+  caption?: string;
+  width?: number; // optional width in pixels
+  height?: number; // optional height in pixels
+}
+
 export interface PatchItem {
   tags: Tag[];
   content?: string;
   items?: string[];
+  image?: PatchImage; // Single image (for backward compatibility)
+  images?: PatchImage[]; // Support for multiple images
 }
 
 export interface SummaryItem {

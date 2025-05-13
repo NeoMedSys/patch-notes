@@ -8,5 +8,4 @@ export const patchNotes: PatchVersion[] = [
   v120b,
   v110b,
   v100b
-
 ];

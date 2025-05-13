@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { authors, AuthorType } from "@/data/authors";
 import { patchNotes } from "@/data/patches";
-import type { Tag, AuthorContribution } from "@/types/patch-notes";
+import type { Tag, AuthorContribution, PatchImage } from "@/types/patch-notes";
 import html2canvas from 'html2canvas';
 import { useRef } from 'react';
-import { Download } from "lucide-react";
+import { Download, ZoomIn } from "lucide-react";
 
 const getTagStyles = (tag: Tag) => {
   const variantMap = {
@@ -358,6 +358,80 @@ const PatchNotes = () => {
                               <li key={listItemIndex} className="text-white/80 text-sm">{listItem}</li>
                             ))}
                           </ul>
+                        )}
+                        
+                        {/* Handle single image (for backward compatibility) */}
+                        {item.image && !item.images && (
+                          <div className="mt-2 relative">
+                            <div className="relative group">
+                              <div className="overflow-hidden border border-cyber-neon/20 rounded-md bg-black/50">
+                                <img 
+                                  src={item.image.src} 
+                                  alt={item.image.alt}
+                                  className="object-contain max-w-full" 
+                                  style={{
+                                    width: item.image.width ? `${item.image.width}px` : 'auto',
+                                    height: item.image.height ? `${item.image.height}px` : 'auto',
+                                    maxHeight: '400px'
+                                  }}
+                                />
+                              </div>
+                              <Button 
+                                variant="ghost" 
+                                size="sm"
+                                className="absolute top-2 right-2 text-white/80 bg-black/60 hover:bg-black/80 p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  // Open image in a new tab
+                                  window.open(item.image!.src, '_blank');
+                                }}
+                              >
+                                <ZoomIn className="h-4 w-4" />
+                              </Button>
+                            </div>
+                            {item.image.caption && (
+                              <p className="text-white/60 text-xs mt-1 italic">{item.image.caption}</p>
+                            )}
+                          </div>
+                        )}
+                        
+                        {/* Handle multiple images */}
+                        {item.images && item.images.length > 0 && (
+                          <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {item.images.map((image, imageIndex) => (
+                              <div key={imageIndex} className="relative">
+                                <div className="relative group">
+                                  <div className="overflow-hidden border border-cyber-neon/20 rounded-md bg-black/50">
+                                    <img 
+                                      src={image.src} 
+                                      alt={image.alt}
+                                      className="object-contain max-w-full" 
+                                      style={{
+                                        width: image.width ? `${image.width}px` : 'auto',
+                                        height: image.height ? `${image.height}px` : 'auto',
+                                        maxHeight: '400px'
+                                      }}
+                                    />
+                                  </div>
+                                  <Button 
+                                    variant="ghost" 
+                                    size="sm"
+                                    className="absolute top-2 right-2 text-white/80 bg-black/60 hover:bg-black/80 p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      // Open image in a new tab
+                                      window.open(image.src, '_blank');
+                                    }}
+                                  >
+                                    <ZoomIn className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                                {image.caption && (
+                                  <p className="text-white/60 text-xs mt-1 italic">{image.caption}</p>
+                                )}
+                              </div>
+                            ))}
+                          </div>
                         )}
                       </div>
                     ))}
