@@ -90,7 +90,7 @@ export const patch: PatchVersion = {
         {
           src: "/images/template.png",
           alt: "Template in the viewer",
-          caption: "New template in the viewer allows you to see the template in the viewer"
+          caption: "New template in the viewer allows for template control in the viewer"
         },
       ]
     },
