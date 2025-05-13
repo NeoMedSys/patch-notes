@@ -26,12 +26,16 @@ export const patch: PatchVersion = {
       },
       { 
         id: 'elakkyen',
+      },
+      { 
+        id: 'katarina',
+        remarks: "Patiance bring roses 🌹"
       }
     ],
     closingRemarks: [
       {
-        id: 'katarina',
-        remarks: "No cake without work."
+        id: 'martin',
+        remarks: "We are finally starting to see some stability issues resolved and some long awaited features are starting to be implemented. Thanks for all the patience and support! :)"
       }
     ]
   },
@@ -53,10 +57,15 @@ export const patch: PatchVersion = {
     
     { 
       tags: [
-        { label: "updated", variant: "orange" },
+        { label: "added", variant: "emerald" },
+        { label: "improved", variant: "orange" },
         { label: "viewer", variant: "slate" },
       ],
-      content: "Added slice indicators for labels. You can now see which slices have been labeled and you can also click them to jump to the slice."
+      items: [
+        "Added slice indicators for labels. You can now see which slices have been labeled and you can also click them to jump to the slice.",
+        "Ghost label interaction. If you miss a label making the label list non-consecutive, you can now click the label to create a new.",
+        "Now working template in the viewer. You can now remap labels and we have better indicator for misaligned labels.",
+      ]
     },
     { 
       tags: [

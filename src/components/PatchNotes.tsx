@@ -42,6 +42,12 @@ const AuthorSection = ({ type, authors: authorContributions }: { type: AuthorTyp
     'closing-remarks': 'CLOSING REMARKS'
   };
 
+  const glowMap = {
+    'patch': 'shadow-[0_0_15px_rgba(0,255,170,0.5)] hover:shadow-[0_0_25px_rgba(0,255,170,0.7)]',
+    'review': 'shadow-[0_0_15px_rgba(52,211,153,0.4)] hover:shadow-[0_0_25px_rgba(52,211,153,0.6)]',
+    'closing-remarks': 'shadow-[0_0_15px_rgba(168,85,247,0.4)] hover:shadow-[0_0_25px_rgba(168,85,247,0.6)]'
+  };
+
   return (
     <div className={cn(
       "p-3 bg-gradient-to-r rounded-md border",
@@ -54,7 +60,7 @@ const AuthorSection = ({ type, authors: authorContributions }: { type: AuthorTyp
           return (
             <div key={contribution.id} className="flex flex-col gap-3">
               <div className="flex items-start gap-3">
-                <Avatar>
+                <Avatar className={`transition-shadow duration-300 ${glowMap[type]}`}>
                   <AvatarImage src={author.avatarUrl} alt={author.name} />
                   <AvatarFallback>{author.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                 </Avatar>
@@ -343,7 +349,16 @@ const PatchNotes = () => {
                             </div>
                           ))}
                         </div>
-                        <p className="text-white/80 text-sm">{item.content}</p>
+                        {item.content && (
+                          <p className="text-white/80 text-sm">{item.content}</p>
+                        )}
+                        {item.items && item.items.length > 0 && (
+                          <ul className="list-disc pl-6 space-y-1">
+                            {item.items.map((listItem, listItemIndex) => (
+                              <li key={listItemIndex} className="text-white/80 text-sm">{listItem}</li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
                     ))}
                   </div>

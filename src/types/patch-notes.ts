@@ -5,7 +5,8 @@ export interface Tag {
 
 export interface PatchItem {
   tags: Tag[];
-  content: string;
+  content?: string;
+  items?: string[];
 }
 
 export interface SummaryItem {
