@@ -34,7 +34,7 @@ export const patch: PatchVersion = {
     ],
     closingRemarks: [
       {
-        id: 'martin',
+        id: 'jon',
         remarks: "We are finally starting to see some stability issues resolved and some long awaited features are starting to be implemented. Thanks for all the patience and support! :)"
       }
     ]
