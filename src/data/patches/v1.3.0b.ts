@@ -60,6 +60,7 @@ export const patch: PatchVersion = {
         { label: "viewer", variant: "cyan" },
       ],
       items: [
+        "Added enhanced loading screens",
         "Window thresholding by pressing and holding the middle mouse button",
         "Clicking a label in the label list will now toggle highlight the border of the segmentation in the viewer.",
         "Fixed issue where there was a limited amount of images that could be loaded in before reaching a maximum memory limit.",
