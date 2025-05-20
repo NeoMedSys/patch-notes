@@ -64,6 +64,7 @@ export const patch: PatchVersion = {
         "Clicking a label in the label list will now toggle highlight the border of the segmentation in the viewer.",
         "Fixed issue where there was a limited amount of images that could be loaded in before reaching a maximum memory limit.",
         "When using windowing preset, the preset name is displayed instead of custom as it was before.",
+        "Fixed issue where old feature for showing labels was able to be turned off and on. We now fixed an issue and will set opacity to zero and allow for setting it back up to show the label."
       ],
       images: [
         {
