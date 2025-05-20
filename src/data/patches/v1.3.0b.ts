@@ -34,7 +34,7 @@ export const patch: PatchVersion = {
     closingRemarks: [
       {
         id: 'jon',
-        remarks: ""
+        remarks: "Congratulations to JJ for winning the Eurovision song contest 2025 🎉"
       }
     ]
   },
