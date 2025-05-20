@@ -15,7 +15,7 @@ export const patch: PatchVersion = {
       ]
     }
   ],
-  isUpcoming: true,
+  isUpcoming: false,
   authors: {
     patch: [
       { 
