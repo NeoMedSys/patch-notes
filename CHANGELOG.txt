@@ -1,0 +1,20 @@
+# Patch Notes - Version 0.2.3b (2025-05-14)
+
+## Added
+-- UX cleanup in viewer
+    - Segmentation tools consolidated under the brush tool.
+-- Fill and 3d fill with shortcuts to almost all settings.
+-- Post processing for fills and labels. Fill holes and remove islands.
+-- Shortcuts cheat sheet udner help in header.
+-- Gradient background for threshold histogram to make it more obvious what the segmentation target is.
+-- 3d object remove, remove connected objects.
+
+## Changed
+-- 
+
+
+## Fixed
+-
+
+## Removed
+--- Fill as its own tool in toolbar. Now activated underr brush.
